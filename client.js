@@ -10,6 +10,10 @@ const rl = readline.createInterface({
 const client = new EventEmitter();
 const server = require('./server')(client);
 
+server.on('response', (resp) => {
+    console.log(`Response: ${resp}`);
+});
+
 rl.on('line', (input) => {
     client.emit('command', input);
 });
