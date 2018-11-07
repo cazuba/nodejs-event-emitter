@@ -1,37 +1,41 @@
-const EventEmitter = require("events");
+const EventEmitter = require('events');
 
 class Server extends EventEmitter {
   constructor(client) {
     super();
-    client.on("command", command => {
+    process.nextTick(() => {
+      this.emit('response', 'Type a command (help to list commands)');
+    });
+
+    client.on('command', (command, args) => {
       switch (command) {
         case 'help':
         case 'ls':
         case 'add':
         case 'delete':
-          this[command]();
+          this[command](args);
           break;
         default:
-          this.emit("response", "Unknown command...");
+          this.emit('response', 'Unknown command...');
           break;
       }
     });
   }
 
   help() {
-    this.emit("response", "help...");
+    this.emit('response', 'Available commands: \nadd task\nls\ndelete :id\nhelp');
   }
 
   ls() {
-    this.emit("response", "ls...");
+    this.emit('response', 'ls...');
   }
 
-  add() {
-    this.emit("response", "add...");
+  add(args) {
+    this.emit('response', args.join(' '));
   }
 
   delete() {
-    this.emit("response", "delete...");
+    this.emit('response', 'delete...');
   }
 }
 
