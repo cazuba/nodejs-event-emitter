@@ -14,7 +14,7 @@ This is a node core module that uses event-drive nature.
 2. > `cd nodejs-event-emitter`
 3. > `node client.js`
 
-### Availble commands:
+### Available commands:
 - > `add {:task|String}`
 - > `ls`
 - > `delete {:id|number}`
