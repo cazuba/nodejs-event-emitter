@@ -10,6 +10,12 @@ const rl = readline.createInterface({
 const client = new EventEmitter();
 const server = require('./server')(client);
 
+process.once('uncaughtException', (err) => {
+    console.log(err);
+    // do so cleanup
+    process.exit(1); // exit anyway
+});
+
 server.on('response', (resp) => {
     // Special command to clear the terminal:
     process.stdout.write('\u001B[2J\u001B[0;0f');
