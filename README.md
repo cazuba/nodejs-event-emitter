@@ -10,15 +10,12 @@ This is a node core module that uses event-drive nature.
 - [NodeJS](https://nodejs.org/en/) already installed
 
 ### Running the application
-> `git clone https://github.com/cazuba/nodejs-event-emitter.git`
-> `cd nodejs-event-emitter`
-> `node client.js`
+1. > `git clone https://github.com/cazuba/nodejs-event-emitter.git`
+2. > `cd nodejs-event-emitter`
+3. > `node client.js`
 
 ### Availble commands:
-> `add {:task|String}`
-
-> `ls`
-
-> `delete {:id|number}`
-
-> `help`
+- > `add {:task|String}`
+- > `ls`
+- > `delete {:id|number}`
+- > `help`
