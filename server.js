@@ -1,41 +1,56 @@
-const EventEmitter = require('events');
+const EventEmitter = require("events");
 
 class Server extends EventEmitter {
   constructor(client) {
     super();
+    this.tasks = {};
+    this.taskId = 1;
     process.nextTick(() => {
-      this.emit('response', 'Type a command (help to list commands)');
+      this.emit("response", "Type a command (help to list commands)");
     });
 
-    client.on('command', (command, args) => {
+    client.on("command", (command, args) => {
       switch (command) {
-        case 'help':
-        case 'ls':
-        case 'add':
-        case 'delete':
+        case "help":
+        case "ls":
+        case "add":
+        case "delete":
           this[command](args);
           break;
         default:
-          this.emit('response', 'Unknown command...');
+          this.emit("response", "Unknown command...");
           break;
       }
     });
   }
 
+  tasksString() {
+      return Object.keys(this.tasks).map(key => {
+          return `${key}: ${this.tasks[key]}`;
+      }).join('\n');
+  }
+
   help() {
-    this.emit('response', 'Available commands: \nadd task\nls\ndelete :id\nhelp');
+    this.emit(
+      "response",
+      "Available commands: \nadd task\nls\ndelete :id\nhelp"
+    );
   }
 
   ls() {
-    this.emit('response', 'ls...');
+    this.tasksString();
+    this.emit("response", `Tasks:\n${this.tasksString()}`);
   }
 
   add(args) {
-    this.emit('response', args.join(' '));
+    this.tasks[this.taskId] = args.join(" ");
+    this.emit("response", `Added task ${this.taskId}`);
+    this.taskId++;
   }
 
-  delete() {
-    this.emit('response', 'delete...');
+  delete(args) {
+      delete(this.tasks[args[0]]);
+    this.emit("response", `Deleted task: ${args[0]}`);
   }
 }
 
